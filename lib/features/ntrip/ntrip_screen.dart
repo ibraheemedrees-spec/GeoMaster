@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../core/services/ntrip_service.dart';
-import '../../core/theme/app_theme.dart';
 
 class NtripScreen extends StatefulWidget {
   const NtripScreen({super.key});
@@ -24,46 +23,36 @@ class _NtripScreenState extends State<NtripScreen> {
   @override
   void initState() {
     super.initState();
-    _ntrip.statusStream.listen((s) {
-  if (mounted) setState(() => _status = s);
-});
   }
 
   Future<void> _connect() async {
-    if (_mountController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('required_field'.tr())),
-      );
-      return;
-    }
-
-    setState(() => _isConnecting = true);
-
-    final ok = await _ntrip.connect(
-      if (!mounted) return;
-      host: _hostController.text.trim(),
-      port: int.tryParse(_portController.text) ?? 2101,
-      mountpoint: _mountController.text.trim(),
-      username: _userController.text.trim(),
-      password: _passController.text,
+  if (_mountController.text.trim().isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('required_field'.tr())),
     );
+    return;
+  }
 
-    setState(() => _isConnecting = false);
+  setState(() => _isConnecting = true);
 
-    setState(() => _isConnecting = false);
-
-if (ok) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text('ntrip_connected'.tr()),
-      backgroundColor: Colors.green,
-    ),
+  final ok = await _ntrip.connect(
+    host: _hostController.text.trim(),
+    port: int.tryParse(_portController.text) ?? 2101,
+    mountpoint: _mountController.text.trim(),
+    username: _userController.text.trim(),
+    password: _passController.text,
   );
-} else {
+
+  if (!mounted) return;
+
+  setState(() => _isConnecting = false);
+
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text('ntrip_failed'.tr()),
-      backgroundColor: Colors.red,
+      content: Text(
+        ok ? 'ntrip_connected'.tr() : 'ntrip_failed'.tr(),
+      ),
+      backgroundColor: ok ? Colors.green : Colors.red,
     ),
   );
 }
