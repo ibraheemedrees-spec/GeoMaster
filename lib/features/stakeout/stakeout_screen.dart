@@ -21,7 +21,7 @@ class StakeoutScreen extends StatefulWidget {
 
 class _StakeoutScreenState extends State<StakeoutScreen> {
   GoogleMapController? _mapController;
-  Position? _currentPosition;
+  
   StreamSubscription<Position>? _positionSub;
   final GnssService _gnssService = GnssService();
   StreamSubscription? _gnssSub;
@@ -45,7 +45,9 @@ class _StakeoutScreenState extends State<StakeoutScreen> {
       locationSettings: const LocationSettings(accuracy: LocationAccuracy.best, distanceFilter: 1),
     ).listen((pos) {
       if (!_gnssService.isConnected) _updateNavigation(pos.latitude, pos.longitude);
-      setState(() => _currentPosition = pos);
+      if (!_gnssService.isConnected) {
+  _updateNavigation(pos.latitude, pos.longitude);
+      }
     });
   }
 
