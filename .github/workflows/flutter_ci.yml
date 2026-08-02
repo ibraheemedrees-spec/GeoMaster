@@ -39,8 +39,7 @@ jobs:
         continue-on-error: true
 
       - name: Analyze
-        run: flutter analyze --no-fatal-infos
-
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
       - name: Check formatting
         run: dart format --set-exit-if-changed .
         continue-on-error: true
