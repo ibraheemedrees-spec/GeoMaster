@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../data/models/project_model.dart';
 import '../../data/models/layer_model.dart';
-import '../../core/theme/app_theme.dart';
 
 class LayersScreen extends StatefulWidget {
   final ProjectModel project;
