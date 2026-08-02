@@ -32,11 +32,7 @@ class _MapScreenState extends State<MapScreen> {
   String _accuracyMode = 'single';
   bool _isLoadingLocation = true;
 
-  // Drawing state
-  DrawMode _drawMode = DrawMode.none;
-  List<LatLng> _currentDrawingPoints = [];
-  String? ;
-  String? ;
+
 
   // Map objects
   Set<Marker> _markers = {};
