@@ -35,8 +35,8 @@ class _MapScreenState extends State<MapScreen> {
   // Drawing state
   DrawMode _drawMode = DrawMode.none;
   List<LatLng> _currentDrawingPoints = [];
-  String? _tempLineName;
-  String? _tempPolygonName;
+  String? ;
+  String? ;
 
   // Map objects
   Set<Marker> _markers = {};
