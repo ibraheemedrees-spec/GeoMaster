@@ -19,14 +19,14 @@ class _NtripScreenState extends State<NtripScreen> {
 
   final NtripService _ntrip = NtripService();
   bool _isConnecting = false;
-  String _status = 'disconnected';
+  
 
   @override
   void initState() {
     super.initState();
     _ntrip.statusStream.listen((s) {
-      if (mounted) setState(() => _status = s);
-    });
+  if (mounted) setState(() => _status = s);
+});
   }
 
   Future<void> _connect() async {
@@ -40,6 +40,7 @@ class _NtripScreenState extends State<NtripScreen> {
     setState(() => _isConnecting = true);
 
     final ok = await _ntrip.connect(
+      if (!mounted) return;
       host: _hostController.text.trim(),
       port: int.tryParse(_portController.text) ?? 2101,
       mountpoint: _mountController.text.trim(),
@@ -49,22 +50,32 @@ class _NtripScreenState extends State<NtripScreen> {
 
     setState(() => _isConnecting = false);
 
-    if (ok) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('ntrip_connected'.tr()), backgroundColor: Colors.green),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('ntrip_failed'.tr()), backgroundColor: Colors.red),
-      );
-    }
-  }
+    setState(() => _isConnecting = false);
+
+if (ok) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('ntrip_connected'.tr()),
+      backgroundColor: Colors.green,
+    ),
+  );
+} else {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('ntrip_failed'.tr()),
+      backgroundColor: Colors.red,
+    ),
+  );
+}
 
   Future<void> _disconnect() async {
-    await _ntrip.disconnect();
-    setState(() {});
-  }
+  await _ntrip.disconnect();
 
+  if (!mounted) return;
+
+  setState(() {});
+  }
+    
   @override
   void dispose() {
     _hostController.dispose();
