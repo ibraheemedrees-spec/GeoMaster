@@ -1,0 +1,10 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_const_constructors: false
+    prefer_const_literals_to_create_immutables: false
+    unused_import: false
+    unused_field: false
+    unused_local_variable: false
+    use_build_context_synchronously: false
