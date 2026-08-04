@@ -148,7 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           const Divider(),
-          const ListTile(
+           ListTile(
             leading: Icon(
           ListTile(
             leading: const Icon(Icons.satellite_alt),
